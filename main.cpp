@@ -7,6 +7,7 @@ using namespace std;
 struct Pixel{
     int r,g,b;
 };
+//generate a square file with height=n*2, and width=n*2
 void genereCarre(int n,const string &name){
     ofstream file(name);
     if(!file)return;
@@ -35,9 +36,18 @@ void flipDownard(const string name){
     //of<<"P3"<<endl<<n*2<<" "<<2<<endl<<"255"<<endl;
 
 }
-void un(const string& name){
-    ofstream file("un_"+name);
+
+/*
+copy of a ppm image file 
+the process consist of reading the width and the height, and  P3 code(that indicate the software reader that the ppm image is of type P3)
+then copy the data, and pate them in a new created file
+*/
+void copyFile(const string& name){
+    //output image
+    ofstream file("copy_"+name);
     ifstream ist(name);
+    
+    //if the image is not not readable or not found ,..
     if(!file || !ist)return;
     string p3;
     int height,width;
@@ -54,6 +64,9 @@ void un(const string& name){
         }file<<endl;
     }
 }
+
+
+
 void deux(const string &name){
     ofstream file("deux_"+name);
     ifstream ist(name);
@@ -62,17 +75,20 @@ void deux(const string &name){
     ist>>p3>>width>>height>>p3;
     file<<"P3"<<endl<<height<<" "<<width<<endl<<"255"<<endl;
 
+    //creating of a 2Dtable that will store the image data (input data)
     vector<vector<Pixel>>v(height,vector<Pixel>(width));
     for(int h=0;h<height;h++){
         for(int w=0;w<width;w++){
             ist>>v[h][w].r>>v[h][w].g>>v[h][w].b;
         }
     }
+    
+    /*
     for(int newHeight=0;newHeight<=width-1;newHeight++){
         for(int newWidth=0;newWidth<=height-1;newWidth++){
             file<<v[newWidth][newHeight].r<<" "<<v[newWidth][newHeight].g<<" "<<v[newWidth][newHeight].b<<" ";
         }file<<endl;
-    }
+    }*/
 }
 void trois(const string &name){
     ofstream file("trois_"+name);
